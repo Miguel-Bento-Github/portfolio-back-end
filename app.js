@@ -14,6 +14,4 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const projectAPI = require("./api/projects").router;
 app.use("/api/project", projectAPI);
 
-app.locals.title = "MB Portfolio Back-end";
-
 module.exports = app;

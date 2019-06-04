@@ -7,10 +7,15 @@ const projectSchema = new Schema({
     required: true
   },
   img: {
-    type: String
+    type: String,
+    required: true
   },
   description: {
     type: String
+  },
+  link: {
+    type: String,
+    required: true
   },
   date: {
     type: Date,
