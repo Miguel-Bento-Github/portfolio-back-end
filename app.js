@@ -12,6 +12,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 const projectAPI = require("./api/projects").router;
+const contactAPI = require("./api/contact").router;
+
 app.use("/api/project", projectAPI);
+app.use("/api/contact", contactAPI);
 
 module.exports = app;

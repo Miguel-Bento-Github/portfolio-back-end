@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const ProjectModel = require("../models/project");
+const ProjectModel = require("../models/Project");
 
 async function create(data) {
   return await ProjectModel.create(data);
