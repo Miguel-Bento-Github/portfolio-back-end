@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const nodemailer = require("nodemailer");
 
-router.get("/send", (req, res) => {
+router.post("/send", (req, res) => {
   let output = `
   <ul>
     <li>Name: ${req.body.name}</li>
@@ -32,7 +32,7 @@ router.get("/send", (req, res) => {
   };
 
   transporter.sendMail(options, (err, info) => {
-    err ? "" : console.log("Message sent: %s", info.messageId);
+    console.log("Message sent: %s", info.messageId);
   });
 });
 
