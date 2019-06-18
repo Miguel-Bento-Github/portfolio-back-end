@@ -1,25 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const ContactModel = require("../models/Contact");
 const nodemailer = require("nodemailer");
 
-async function getAll() {
-  return await ContactModel.find();
-}
-async function create(data) {
-  return await ContactModel.create(data);
-}
-
-router.get("/", (req, res) => {
-  getAll()
-    .then(dbRes => res.send(dbRes))
-    .catch(err =>
-      res.status(500).send({ message: "Database error", err: err.message })
-    );
-});
-
-router.post("/send", (req, res) => {
-  console.log(req.body);
+router.get("/send", (req, res) => {
   let output = `
   <ul>
     <li>Name: ${req.body.name}</li>
@@ -49,7 +32,7 @@ router.post("/send", (req, res) => {
   };
 
   transporter.sendMail(options, (err, info) => {
-    err ? console.log(err) : console.log("Message sent: %s", info.messageId);
+    err ? "" : console.log("Message sent: %s", info.messageId);
   });
 });
 
