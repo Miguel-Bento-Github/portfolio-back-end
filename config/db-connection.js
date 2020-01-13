@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(x => {
     console.log(
-      `Successful connection to the Database. Currently at "${
-        x.connections[0].name
-      }"`
+      `Successful connection to the Database. Currently at "${x.connections[0].name}"`
     );
   })
   .catch(err => {

@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-router.post("/send", (req, res) => {
-  let output = `
+const create = (req, res) => {
+  let emailContent = `
   <ul>
     <li>Name: ${req.body.name}</li>
     <li>Email: ${req.body.email}</li>
@@ -12,28 +13,27 @@ router.post("/send", (req, res) => {
       <p>${req.body.message}<p></li>
   </ul>`;
 
-  let transporter = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.ethereal.email",
-    port: 587,
-    auth: {
-      user: "portfoliosender19812783123@gmail.com",
-      pass: "p@ssw0rd4Portfolio"
-    }
-  });
-
-  // send mail with defined transport object
-  let options = {
-    from: `Portfolio ${req.body.email}`,
+  const msg = {
     to: "miguel.angelo.f.bento@gmail.com",
+    from: req.body.email,
     subject: req.body.subject,
-    text: "Hi",
-    html: output
+    text: req.body.subject,
+    html: emailContent
   };
+  try {
+    sgMail.send(msg);
+    res.send(200);
+  } catch (error) {
+    res.send(500);
+  }
+};
 
-  transporter.sendMail(options, (err, info) => {
-    console.log("Message sent: %s", info.messageId);
-  });
+router.post("/send", (req, res) => {
+  create(req)
+    .then(() => res.send(200))
+    .catch(err =>
+      res.status(500).send({ message: "Database error", err: err.message })
+    );
 });
 
 module.exports = { router };
