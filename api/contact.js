@@ -3,7 +3,9 @@ const router = express.Router();
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const create = (req, res) => {
+const create = (req, res) => {};
+
+router.post("/send", (req, res) => {
   let emailContent = `
   <ul>
     <li>Name: ${req.body.name}</li>
@@ -20,20 +22,14 @@ const create = (req, res) => {
     text: req.body.subject,
     html: emailContent
   };
-  try {
-    sgMail.send(msg);
-    res.send(200);
-  } catch (error) {
-    res.send(500);
-  }
-};
 
-router.post("/send", (req, res) => {
-  create(req)
-    .then(() => res.send(200))
-    .catch(err =>
-      res.status(500).send({ message: "Database error", err: err.message })
-    );
+  sgMail.send(msg, (error, result) => {
+    if (error) {
+      res.send(500, error);
+    } else {
+      res.send(200);
+    }
+  });
 });
 
 module.exports = { router };
