@@ -7,19 +7,20 @@ const app = express();
 const cors = require("cors");
 
 const whitelist = [
-  "https://www.mr-monkey.net",
-  "mr-monkey.net",
-  "https://mr-monkey.net/",
+    "https://www.mr-monkey.net",
+    "mr-monkey.net",
+    "https://mr-monkey.net/",
+    "http://localhost:3000"
 ];
 
 const corsOptions = function(req, callback) {
-  let corsOptions;
-  if (whitelist.indexOf(req.header("Origin")) !== -1) {
-    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
-  } else {
-    corsOptions = { origin: false }; // disable CORS for this request
-  }
-  callback(null, corsOptions); // callback expects two parameters: error and options
+    let corsOptions;
+    if (whitelist.indexOf(req.header("Origin")) !== -1) {
+        corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+    } else {
+        corsOptions = { origin: false }; // disable CORS for this request
+    }
+    callback(null, corsOptions); // callback expects two parameters: error and options
 };
 
 app.use(cors(corsOptions));
@@ -29,7 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", function(req, res, next) {
-  res.json({ msg: "Portfolio Backend" });
+    res.json({ msg: "Portfolio Backend" });
 });
 
 const projectAPI = require("../api/projects").router;
