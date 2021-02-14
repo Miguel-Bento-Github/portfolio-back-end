@@ -9,7 +9,6 @@ const whitelist = [
     "https://www.mr-monkey.net",
     "mr-monkey.net",
     "https://mr-monkey.net/",
-    "http://localhost:3000"
 ];
 
 const corsOptions = function(req, callback) {
@@ -29,7 +28,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", function(req, res, next) {
-    res.json({ msg: "Portfolio Backend" });
     res.send({msg: 'You might be looking for this <a href="https://mr-monkey.net">https://mr-monkey.net</a>'})
 });
 
