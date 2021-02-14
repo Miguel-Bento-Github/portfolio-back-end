@@ -1,5 +1,4 @@
 require("dotenv").config();
-require("../config/db-connection");
 const bodyParser = require("body-parser");
 const express = require("express");
 const logger = require("morgan");
@@ -31,12 +30,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", function(req, res, next) {
     res.json({ msg: "Portfolio Backend" });
+    res.send({msg: 'You might be looking for this <a href="https://mr-monkey.net">https://mr-monkey.net</a>'})
 });
 
-const projectAPI = require("../api/projects").router;
 const contactAPI = require("../api/contact").router;
 
-app.use("/api/project", projectAPI);
 app.use("/api/contact", contactAPI);
 
 module.exports = app;
